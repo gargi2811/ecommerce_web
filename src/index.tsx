@@ -1,12 +1,15 @@
-import React, { useEffect } from 'react';
-import ReactDOM from 'react-dom/client';
-import { UserContextProvider, useUserContext } from './context/User/UserContext';
-import { ToastContextProvider } from './context/Toast/ToastContext';
-import App from './App';
-import './style/globalStyle.css';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { CartContextProvider } from './context/Cart/CartContext';
-import { LoaderContextProvider } from './context/Loader/LoaderContext';
+import React, { useEffect } from "react";
+import ReactDOM from "react-dom/client";
+import {
+  UserContextProvider,
+  useUserContext,
+} from "./context/User/UserContext";
+import { ToastContextProvider } from "./context/Toast/ToastContext";
+import App from "./App";
+import "./style/globalStyle.css";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { CartContextProvider } from "./context/Cart/CartContext";
+import { LoaderContextProvider } from "./context/Loader/LoaderContext";
 
 const UserAuth = () => {
   const { dispath } = useUserContext();
@@ -14,7 +17,7 @@ const UserAuth = () => {
     const auth = getAuth();
     const sub = onAuthStateChanged(auth, (user) => {
       if (user) {
-        dispath({ type: 'LOG_IN', payload: user });
+        dispath({ type: "LOG_IN", payload: user });
       }
     });
     return sub;
@@ -23,18 +26,20 @@ const UserAuth = () => {
   return <div></div>;
 };
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
 root.render(
   <UserContextProvider>
     <ToastContextProvider>
-        <CartContextProvider>
-          <LoaderContextProvider>
-            <UserAuth />
-            <React.StrictMode>
-              <App />
-            </React.StrictMode>
-          </LoaderContextProvider>
-        </CartContextProvider>
+      <CartContextProvider>
+        <LoaderContextProvider>
+          <UserAuth />
+          <React.StrictMode>
+            <App />
+          </React.StrictMode>
+        </LoaderContextProvider>
+      </CartContextProvider>
     </ToastContextProvider>
   </UserContextProvider>
 );
